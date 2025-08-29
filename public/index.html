@@ -1,153 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ALICE BOT</title>
-<style>
-    body {
-        font-family: 'Orbitron', Arial, sans-serif;
-        max-width: 800px;
-        margin: auto;
-        padding: 20px;
-        background-color: black;
-        color: #ff4d4d;
-        text-shadow: 0 0 8px #ff0000;
-    }
-    h1 {
-        text-align: center;
-        color: #ff4d4d;
-        text-shadow: 0 0 15px #ff0000, 0 0 30px #ff3333;
-    }
-    #chatbox {
-        border: 2px solid #ff1a1a;
-        height: 400px;
-        overflow-y: scroll;
-        padding: 15px;
-        background-color: #111;
-        border-radius: 12px;
-        margin-bottom: 10px;
-        transition: box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
-    }
-    #chatbox.speaking {
-        box-shadow: 0 0 25px #ff0000, 0 0 50px #ff1a1a;
-    }
-    #chatbox.listening {
-        box-shadow: 0 0 25px #4dff4d, 0 0 50px #1aff1a;
-        border-color: #4dff4d;
-    }
-    .message {
-        margin: 5px 0;
-        padding: 10px 12px;
-        border-radius: 8px;
-        max-width: 70%;
-        clear: both;
-        font-size: 1rem;
-    }
-    .user {
-        background-color: #222;
-        color: #ff6666;
-        border: 1px solid #ff3333;
-        float: right;
-        text-align: right;
-    }
-    .ai {
-        background-color: #330000;
-        color: #ffcccc;
-        border: 1px solid #ff4d4d;
-        float: left;
-    }
-    #controls {
-        display: flex;
-        gap: 10px;
-        margin-top: 10px;
-        flex-wrap: wrap;
-    }
-    input {
-        flex: 1;
-        padding: 10px;
-        border: 1px solid #ff3333;
-        border-radius: 5px;
-        background: #111;
-        color: #ff4d4d;
-    }
-    button {
-        padding: 10px 20px;
-        background-color: #330000;
-        color: #ff4d4d;
-        border: 1px solid #ff3333;
-        border-radius: 5px;
-        cursor: pointer;
-        text-shadow: 0 0 8px #ff0000;
-    }
-    button:hover {
-        background-color: #550000;
-        box-shadow: 0 0 10px #ff0000;
-    }
-    select {
-        padding: 10px;
-        border-radius: 5px;
-        margin-bottom: 10px;
-        width: 100%;
-        background: #111;
-        color: #ff4d4d;
-        border: 1px solid #ff3333;
-    }
-    .typing-indicator {
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        padding: 10px 12px;
-    }
-    .typing-indicator span {
-        width: 8px;
-        height: 8px;
-        background-color: #ff4d4d;
-        border-radius: 50%;
-        animation: bounce 1.2s infinite ease-in-out;
-    }
-    .typing-indicator span:nth-child(2) {
-        animation-delay: -0.2s;
-    }
-    .typing-indicator span:nth-child(3) {
-        animation-delay: -0.4s;
-    }
-    @keyframes bounce {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-5px); }
-    }
-    @media (max-width: 600px) {
-        #chatbox { height: 300px; }
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Adviser Chat</title>
+    <link rel="stylesheet" href="https://nhsuk.github.io/nhsuk-frontend/dist/nhsuk-7.1.0.min.css">
+    <style>
+        /* General Body and Container Styles */
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            max-width: 960px; /* NHS standard width */
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            color: #000;
+        }
+
+        /* NHS-like Heading */
+        h1.nhsuk-heading-xl {
+            text-align: center;
+            color: #005eb8; /* NHS Blue */
+            margin-bottom: 24px;
+        }
+
+        /* Chatbox and Message Styles */
+        #chatbox {
+            border: 1px solid #d8dde0;
+            height: 400px;
+            overflow-y: scroll;
+            padding: 15px;
+            background-color: #f0f4f5;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            transition: box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
+        }
+        .message {
+            margin: 10px 0;
+            padding: 12px 16px;
+            border-radius: 20px;
+            max-width: 70%;
+            clear: both;
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+        .user {
+            background-color: #005eb8; /* NHS Blue */
+            color: #fff;
+            float: right;
+            border-radius: 20px 20px 0 20px;
+            text-align: left;
+        }
+        .ai {
+            background-color: #fff;
+            color: #212b32;
+            float: left;
+            border: 1px solid #d8dde0;
+            border-radius: 20px 20px 20px 0;
+        }
+        
+        /* Control and Button Styles */
+        #controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+            align-items: center;
+        }
+        input#userInput {
+            flex-grow: 1;
+            padding: 12px;
+            border: 1px solid #d8dde0;
+            border-radius: 4px;
+            font-size: 1rem;
+            color: #000;
+        }
+        select#modelSelect {
+            padding: 10px;
+            border: 1px solid #d8dde0;
+            border-radius: 4px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 12px 20px;
+            border: 1px solid #005eb8;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #fff;
+            color: #005eb8;
+            font-weight: bold;
+            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+        }
+        button:hover {
+            background-color: #005eb8;
+            color: #fff;
+        }
+        button:disabled {
+            background-color: #d8dde0;
+            color: #768692;
+            border-color: #d8dde0;
+            cursor: not-allowed;
+        }
+        .nhsuk-warning-callout {
+            border-left-color: #ffb81c;
+            border-left-width: 4px;
+            padding: 16px;
+            margin: 16px 0;
+        }
+        /* Typing indicator to fit the new theme */
+        .typing-indicator span {
+            background-color: #005eb8;
+        }
+    </style>
 </head>
-<body>
-<h1>ALICE BOT</h1>
+<body class="nhsuk-body">
 
-<label for="modelSelect">Choose AI Model:</label>
-<select id="modelSelect">
-    <option value="qwen/qwen-2.5-coder-32b-instruct:free" >Qwen 2.5 Coder 32B (Free)</option>
-    <option value="cognitivecomputations/dolphin-mistral-24b-venice-edition:free">Dolphin Mistral 24B Venice (Free)</option>
-    <option value="meta-llama/llama-3.2-3b-instruct:free">Llama 3.2 3B (Free)</option>
-    <option value="mistralai/mistral-7b-instruct" selected>Mistral 7B (Free)</option>
-    <option value="google/gemma-2-9b-it:free">Google Gemma 2 9B (Free)</option>
-    <option value="deepseek/deepseek-r1-0528:free">DeepSeek R1 0528 (Free)</option>
-    <option value="meta-llama/llama-3.3-70b-instruct:free">Llama 3.3 70B (Free)</option>
-    <option value="tngtech/deepseek-r1t-chimera:free">DeepSeek Chimera (Free)</option>
-</select>
+<header class="nhsuk-header" role="banner" style="background-color: #fff;">
+  <div class="nhsuk-width-container nhsuk-header__container">
+    <div class="nhsuk-header__logo">
+      <a class="nhsuk-header__link nhsuk-header__link--homepage" href="/" aria-label="Medical Adviser Chat">
+        <svg class="nhsuk-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 16">
+          <path class="nhsuk-logo__background" fill="#005eb8" d="M0 0h40v16H0z"></path>
+          <path class="nhsuk-logo__text" fill="#fff" d="M3.987 1.558h1.22l2.35 11.237h.17l2.257-11.237h1.082L8.6 15.58H7.31L4.85 4.344h-.17L2.42 15.58H1.13zm15.82 0h-1.22l-2.35 11.237h-.17l-2.257-11.237h-1.082l2.35 11.237h.17l2.257-11.237z"></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+</header>
+<main class="nhsuk-main-wrapper" id="maincontent" role="main">
+    <div class="nhsuk-width-container">
+        <h1 class="nhsuk-heading-xl">Your Medical Adviser</h1>
 
-<div id="chatbox"></div>
+        <div class="nhsuk-warning-callout">
+            <h3 class="nhsuk-warning-callout__label">Disclaimer</h3>
+            <p>This service provides general health information and is not a substitute for professional medical advice. Always consult a qualified healthcare professional for any health concerns.</p>
+        </div>
 
-<div id="controls">
-    <input type="text" id="userInput" placeholder="Type your message...">
-    <button onclick="sendMessage()">Send</button>
-    <button onclick="resetChat()">Clear</button>
-    <button onclick="stopSpeaking()">Stop Voice</button>
-    <button onclick="startListening()">🎤 Speak</button>
-    <button onclick="stopListening()">✖ Stop Listening</button>
-</div>
+        <label for="modelSelect">Choose AI Model:</label>
+        <select id="modelSelect" class="nhsuk-select">
+            <option value="qwen/qwen-2.5-coder-32b-instruct:free">Qwen 2.5 Coder 32B (Free)</option>
+            <option value="cognitivecomputations/dolphin-mistral-24b-venice-edition:free">Dolphin Mistral 24B Venice (Free)</option>
+            <option value="meta-llama/llama-3.2-3b-instruct:free">Llama 3.2 3B (Free)</option>
+            <option value="mistralai/mistral-7b-instruct" selected>Mistral 7B (Free)</option>
+            <option value="google/gemma-2-9b-it:free">Google Gemma 2 9B (Free)</option>
+            <option value="deepseek/deepseek-r1-0528:free">DeepSeek R1 0528 (Free)</option>
+            <option value="meta-llama/llama-3.3-70b-instruct:free">Llama 3.3 70B (Free)</option>
+            <option value="tngtech/deepseek-r1t-chimera:free">DeepSeek Chimera (Free)</option>
+        </select>
 
+        <div id="chatbox"></div>
+
+        <div id="controls">
+            <input type="text" id="userInput" placeholder="Type your message..." class="nhsuk-input">
+            <button onclick="sendMessage()" class="nhsuk-button">Send</button>
+            <button onclick="resetChat()" class="nhsuk-button nhsuk-button--secondary">Clear</button>
+            <button onclick="stopSpeaking()" class="nhsuk-button nhsuk-button--secondary">Stop Voice</button>
+            <button onclick="startListening()" class="nhsuk-button">🎤 Speak</button>
+            <button onclick="stopListening()" class="nhsuk-button nhsuk-button--secondary">✖ Stop Listening</button>
+        </div>
+    </div>
+</main>
 <script>
+// Your existing JavaScript code remains the same.
 let sessionId = Date.now().toString();
 let isSpeaking = false;
 let recognition;
