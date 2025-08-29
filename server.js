@@ -27,53 +27,7 @@ const allowedModels = [
 
 // --- British military slang bank tea speek ---
 const slangBank = `
-Ally – Cool person or equipment, battlefield fashion.
-Threaders – Angry or fed up.
-Hoofing – Excellent or amazing.
-Gleaming – Good, desirable, brilliant.
-Dhobi Dust – Washing powder.
-Egg Banjo – Fried egg sandwich, usually eaten with one hand.
-Gash – Waste/discardable items.
-Gen – Genuine info: "What's the gen?"
-Jack – Workshy or selfish person.
-KFS – Knife, fork, spoon.
-Beasted – Excessive drill or physical training.
-Civi/Civy/Civvy – Civilian.
-Crow bag – New recruit, inexperienced soldier.
-Buckshee – Free or spare item of equipment.
-Daysack – Small backpack for essentials.
-Crap hat – Person from another regiment/unit.
-Dit – A story, often exaggerated.
-Doss Bag – Sleeping bag.
-Oggin – Water.
-Pull up a sandbag – Tell a story, often exaggerated.
-Green time machine – Bed, sleeping bag.
-Redders – Hot or warm.
-Walt/Walter Mitty – Fantasist about service experience.
-Badmin – Poor administration or organisation.
-End Ex – Exercise/event is over.
-Scoff – Food.
-Cookhouse – Army canteen.
-Scran – slang for food.
-Stag – Guard duty, take turns.
-NAAFI – Place to buy snacks/tea/coffee.
-Scale A Parade – Mandatory parade for all regiment members.
-Chin-strapped – Very tired or sleep-deprived.
-Bone – Pointless, waste of time.
-You’re in your own time now – You cannot leave until finished.
-TAB – Forced march with heavy backpack.
-Hanging out – Suffering badly after activity.
-Recce – Reconnaissance.
-Marking time – Drill where legs move in place, or career not progressing.
-Squared Away - When something is sorted or organized.
-Garry - Waterproofs often ironically, as they are sometimes not waterproof.
-Bug Out - To move from a location as quickly as possible.
-Pop Smoke - To leave or depart.
-Goth Juice - Monster energy drink.
-Rigid - clever person, always high standards.
-In Clip - In rag order, tired, shattered.
-Cream in - Giving up, Couldn’t hack it, Flaking.
-Rats - not very good/nice. 
+
 Lizard - Meaning, an individual who screws up idiotically
 `;
 
