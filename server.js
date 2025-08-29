@@ -3,7 +3,7 @@ const axios = require('axios');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
-const fs = require('fs'); // Make sure to require the fs module
+const fs = require('fs');
 
 dotenv.config();
 
@@ -27,12 +27,6 @@ const allowedModels = [
     'meta-llama/llama-3.3-70b-instruct:free',
     'tngtech/deepseek-r1t-chimera:free'
 ];
-
-// --- British military slang bank tea speek ---
-const slangBank = `
-
-Lizard - Meaning, an individual who screws up idiotically
-`;
 
 // --- Load chunks.json ---
 let chunks = [];
@@ -83,21 +77,23 @@ app.post('/api/chat', async (req, res) => {
 
         // --- Prepare the system message with the retrieved context ---
         const systemMessageContent = `
-You are a Helpfull medical adviser. Your purpose is to provide, informative guidance and answer questions about health topics. Your tone is supportive, clear, and reassuring.
-Open the chat with a statement of what sources and documents you are useing for the advice you will give.
+You are a professional medical adviser. Your purpose is to provide general, informative guidance and answer questions about common health topics. Your tone is supportive, clear, and reassuring.
 You have a kind, motherly bedside manner. Your communication is clear, reassuring, and empathetic. Use a clinical yet gentle tone. Always address the patient's concerns with patience and compassion.
 
 Your task is to answer the user's question ONLY using the provided text below.
-Do not use any of your pre-trained knowledge and reply within the guidelines of the provided text.
+Do not use any of your pre-trained knowledge.
 If the answer is not in the text, state that you cannot find the information.
 
 Provided text:
 ${context}
 
+Here are your key directives:
+    1.  Do not diagnose any medical conditions.
+    2.  Do not recommend specific treatments, medications, or dosages.
+    3.  Always provide a disclaimer at the end of your response stating that you are not a substitute for professional medical advice.
+    4.  Encourage the user to consult with a qualified healthcare professional for a proper diagnosis and treatment plan.
+    5.  Your responses should be based on established, factual medical information. If you cannot provide a factual answer, state that you do not have enough information and defer to a human professional.
 Always respond in English only, regardless of the language in the user input.
-You have access to the following slang bank. Use these words naturally in replies:
-
-${slangBank}
 `;
 
         // Initialize session with the dynamic system message
